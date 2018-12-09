@@ -8,7 +8,7 @@ docker run \
   --device /dev/fuse \
   -v ${HOST_CONF_DIR}:/config \
   -v ${HOST_MOUNT_DIR}:/mount \
-  rclone-mount
+  danielheene/rclone-mount
 ```
 
 ### Environment variables
@@ -41,4 +41,4 @@ remote = cache:
 
 ----
 ## License
-[MIT](LICENSE)
+[MIT](https://github.com/danielheene/docker-rclone-mount/blob/develop/LICENSE)
