@@ -1,24 +1,41 @@
 # docker-rclone-mount
 Mount a __[rclone](https://github.com/ncw/rclone)__ remote inside a docker container.
 
-### Start
+### Start Example
+__mounting a remote providing its config via file__
 ```bash
 docker run \
   --cap-add SYS_ADMIN \
   --device /dev/fuse \
-  -v ${HOST_CONF_DIR}:/config \
-  -v ${HOST_MOUNT_DIR}:/mount \
+  -v /example/config/path:/config \
+  -v /example/mount/path:/mount \
   danielheene/rclone-mount
 ```
 
-### Environment variables
-
+__mounting a remote providing its config via [environment variables](https://rclone.org/docs/#environment-variables)__
+```bash
+docker run \
+  --cap-add SYS_ADMIN \
+  --device /dev/fuse \
+  -e "RCLONE_STATS=5s" \
+  -e "RCLONE_CONFIG_MOUNT_TYPE=drive" \
+  danielheene/rclone-mount
 ```
-CONFIG_DIR      /config         # directory where config file is stored
-CONFIG_FILE     rclone.conf     # name of the stored rclone config file
-MOUNT_DIR       /mount          # directory where the volume is mounted
-MOUNT_REMOTE    mount           # rclone volume name which will be mounted
-CACHE_DIR       /cache          # directory which rclone uses for caching
+
+__It's also possible to combine both ways! Like only passing you tokens or password via the environment variables.__
+### Environment Defaults
+```
+CACHE_DIR       /cache                        # directory which rclone uses for caching
+CONFIG_DIR      /config                       # directory where config file is stored
+CONFIG_FILE     rclone.conf                   # name of the stored rclone config file
+LOG_DIR         /logs                         
+LOG_FILE        /rclone.log
+LOG_LEVEL       NOTICE
+MOUNT_DIR       /mount                        # directory where the volume is mounted
+MOUNT_NAME      mount                         # rclone volume name which will be mounted
+MOUNT_PID_FILE  /var/run/rclone-mount.pid
+UID             1000
+GID             1000
 ```
 
 ### Example config file
